@@ -1,15 +1,37 @@
-{
-  "total_clean_orders": 175,
-  "total_revenue_inr": 97358.30,
-  "return_rates_by_payment": {
-    "COD": 44.4,
-    "UPI": 18.9,
-    "CARD": 14.7
-  },
-  "highest_risk_segment": {
-    "segment": "COD + Tier-2 Cities",
-    "return_rate_pct": 54.5
-  },
-  "peak_revenue_month": "March 2026",
-  "peak_revenue_amount_inr": 20318.90
+import json
+import os
+
+# Ensure narrator directory exists
+os.makedirs("narrator", exist_ok=True)
+
+# Compile verified metrics dictionary matching brief requirements
+findings_data = {
+    "cleaned_total_revenue_inr": round(float(total_revenue), 2),
+    "raw_total_revenue_inr": 99860.20,  # From Part 1 baseline report
+    "duplicate_reconciliation_delta_inr": round(float(dups_value), 2),
+    "return_rate_by_payment": {
+        "COD": float(pm_returns.loc['COD', 'return_rate_pct']),
+        "CARD": float(pm_returns.loc['CARD', 'return_rate_pct']),
+        "UPI": float(pm_returns.loc['UPI', 'return_rate_pct'])
+    },
+    "highest_risk_segment": {
+        "payment_method": "COD",
+        "city_tier": 2,
+        "return_rate_pct": float(segment.loc[('COD', '2'), 'return_rate_pct'])
+    },
+    "true_peak_month": {
+        "month": "2026-03",
+        "revenue_inr": float(ts_without_outliers['2026-03'])
+    },
+    "outlier_inflated_month": {
+        "month": "2026-01",
+        "apparent_revenue_inr": float(ts_with_outliers['2026-01']),
+        "corrected_revenue_inr": float(ts_without_outliers['2026-01'])
+    }
 }
+
+# Write programmatically to narrator/findings.json
+with open("narrator/findings.json", "w") as f:
+    json.dump(findings_data, f, indent=2)
+
+print("\n--- Task 1 (Part 3): findings.json successfully generated programmatically ---")
