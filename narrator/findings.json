@@ -1,0 +1,15 @@
+{
+  "total_clean_orders": 175,
+  "total_revenue_inr": 97358.30,
+  "return_rates_by_payment": {
+    "COD": 44.4,
+    "UPI": 18.9,
+    "CARD": 14.7
+  },
+  "highest_risk_segment": {
+    "segment": "COD + Tier-2 Cities",
+    "return_rate_pct": 54.5
+  },
+  "peak_revenue_month": "March 2026",
+  "peak_revenue_amount_inr": 20318.90
+}
